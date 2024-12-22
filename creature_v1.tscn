@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://3dmbypstpgm7"]
+
+[ext_resource type="Script" path="res://creature_v1.gd" id="1_xo21a"]
+[ext_resource type="Texture2D" uid="uid://eheqhcglg2b1" path="res://icon.svg" id="2_3wdvl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7dlm0"]
+size = Vector2(32, 32)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2lg6b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a4a1s"]
+size = Vector2(42, 42)
+
+[node name="creature_v1" type="CharacterBody2D" groups=["creature"]]
+collision_layer = 2
+script = ExtResource("1_xo21a")
+
+[node name="target_line" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 2.0
+default_color = Color(1, 1, 1, 0.498039)
+
+[node name="sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_3wdvl")
+
+[node name="col" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7dlm0")
+
+[node name="detect_r" type="Area2D" parent="."]
+position = Vector2(11, 0)
+
+[node name="col" type="CollisionShape2D" parent="detect_r"]
+shape = SubResource("CircleShape2D_2lg6b")
+
+[node name="detect_l" type="Area2D" parent="."]
+position = Vector2(-11, 0)
+
+[node name="col" type="CollisionShape2D" parent="detect_l"]
+shape = SubResource("CircleShape2D_2lg6b")
+
+[node name="detect_food" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="col" type="CollisionShape2D" parent="detect_food"]
+shape = SubResource("RectangleShape2D_a4a1s")
+
+[connection signal="body_entered" from="detect_r" to="." method="_on_detect_r_body_entered"]
+[connection signal="body_exited" from="detect_r" to="." method="_on_detect_r_body_exited"]
+[connection signal="body_entered" from="detect_l" to="." method="_on_detect_l_body_entered"]
+[connection signal="body_exited" from="detect_l" to="." method="_on_detect_l_body_exited"]
+[connection signal="area_entered" from="detect_food" to="." method="_on_detect_food_area_entered"]

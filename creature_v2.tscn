@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://3dmbypstpgm7"]
+[gd_scene load_steps=6 format=3 uid="uid://cqagohibs7vlv"]
 
-[ext_resource type="Script" path="res://creature.gd" id="1_xo21a"]
-[ext_resource type="Texture2D" uid="uid://eheqhcglg2b1" path="res://icon.svg" id="2_3wdvl"]
+[ext_resource type="Script" path="res://creature_v2.gd" id="1_ljbuq"]
+[ext_resource type="Texture2D" uid="uid://eheqhcglg2b1" path="res://icon.svg" id="2_mv2ng"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7dlm0"]
 size = Vector2(32, 32)
@@ -11,9 +11,9 @@ size = Vector2(32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a4a1s"]
 size = Vector2(42, 42)
 
-[node name="creature" type="CharacterBody2D" groups=["creature"]]
+[node name="creature_v2" type="CharacterBody2D" groups=["creature"]]
 collision_layer = 2
-script = ExtResource("1_xo21a")
+script = ExtResource("1_ljbuq")
 
 [node name="target_line" type="Line2D" parent="."]
 points = PackedVector2Array(0, 0, 0, 0)
@@ -22,10 +22,36 @@ default_color = Color(1, 1, 1, 0.498039)
 
 [node name="sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_3wdvl")
+texture = ExtResource("2_mv2ng")
 
 [node name="col" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_7dlm0")
+
+[node name="personality" type="Timer" parent="."]
+autostart = true
+
+[node name="survival" type="Timer" parent="."]
+autostart = true
+
+[node name="label_p" type="Label" parent="."]
+offset_left = -144.0
+offset_top = -32.0
+offset_right = 144.0
+offset_bottom = -8.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(144, 12)
+text = "p"
+horizontal_alignment = 1
+
+[node name="label_s" type="Label" parent="."]
+offset_left = -144.0
+offset_top = -20.0
+offset_right = 144.0
+offset_bottom = 4.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(144, 12)
+text = "s"
+horizontal_alignment = 1
 
 [node name="detect_r" type="Area2D" parent="."]
 position = Vector2(11, 0)
@@ -46,6 +72,8 @@ collision_mask = 4
 [node name="col" type="CollisionShape2D" parent="detect_food"]
 shape = SubResource("RectangleShape2D_a4a1s")
 
+[connection signal="timeout" from="personality" to="." method="_on_personality_timeout"]
+[connection signal="timeout" from="survival" to="." method="_on_survival_timeout"]
 [connection signal="body_entered" from="detect_r" to="." method="_on_detect_r_body_entered"]
 [connection signal="body_exited" from="detect_r" to="." method="_on_detect_r_body_exited"]
 [connection signal="body_entered" from="detect_l" to="." method="_on_detect_l_body_entered"]
