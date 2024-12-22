@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	if target_food != null:
+	if target_food != null and c_food.get_child(target_food) != null:
 		dir_target_food = c_food.get_child(target_food).position - global_transform.origin
 		target_line.set_point_position(1, dir_target_food)
 	
@@ -90,8 +90,9 @@ func _on_survival_timeout() -> void:
 			msg(1, "jump (food)")
 	
 	if detect_r or detect_l:
-		a_jump(1)
-		msg(1, "jump (obstacle)")
+		if focus != FOCUS.REST:
+			a_jump(1)
+			msg(1, "jump (obstacle)")
 
 # display
 func msg(brain, string):

@@ -179,6 +179,12 @@ P_INTERVAL = 0.5
 S_INTERVAL = 0.1
 CONCENTRATION = 0.2
 
+[node name="c4" parent="." instance=ExtResource("1_ueor3")]
+position = Vector2(232, -15)
+P_INTERVAL = 0.1
+S_INTERVAL = 0.1
+CONCENTRATION = 0.01
+
 [node name="cam" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 script = ExtResource("2_7uy1j")
